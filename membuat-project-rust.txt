@@ -1,0 +1,8 @@
+untuk membuat project baru di rust kita bisa gunakan perintah:
+cargo new nama-project 
+
+atau bisa menggunakan cargo init untuk membuat project di direktori yang dibuka
+ex: cargo init 
+
+nanti akan dibuatkan sebuah folder sesuai dengan nama projectnya
+ex: cargo new rust-dasar~
