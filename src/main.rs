@@ -739,6 +739,7 @@ fn loop_label(){
     }
 }
 
+
 // While Loop
 // While loop adalah jenis perulangan dimana memiliki kondisi
 // jika kondisi masih tepenuhi maka perulangan akan dilanjutkan
@@ -1051,9 +1052,10 @@ fn slice_reference(){
 #[test]
 fn string_slice(){
     let mut nama_panjang: String = String::from("Faiz Hannan Hakim");
-    let nama_depan: &str = &nama_panjang[..=4];
+    let mut nama_depan: &str = &nama_panjang[..=4];
     let nama_tengah: &str = &nama_panjang[5..=10];
     let nama_belakang: &str = &nama_panjang[12..];
+   
     println!("{}", nama_depan);
     println!("{}", nama_tengah);
     println!("{}", nama_belakang);
@@ -1896,16 +1898,18 @@ trait CanSay: CanSayHello + CanSayGoodbye{
 // tipe data generic bisa lebih dari satu, tinggal gunakan , (koma) sebagai pemisah tipe data generic nya 
 // Biasanya nama tipe data generic hanya menggunakan satu huruf kapital
 
+#[derive(Debug)]
 struct Point<T> {
     x: T,
     y: T,
 }
 
+
 #[test]
 fn test_generic_struct(){
     let integer: Point<i32> = Point::<i32> {x: 5, y:10};
 
-    println!("integer x:{} y:{}", integer.x, integer.y )
+    println!("{:?}", integer )
 }
 
 // Generix Di enum
@@ -1923,6 +1927,7 @@ fn test_generic_enum(){
     let nilai: Value<u8> = Value::<u8>::VALUE(10);
     
 }
+
 
 // Batasan Tipe Generic
 // saat embuat generic kita bisa memberikan batasan tipe yang diperbolehkan
@@ -2459,6 +2464,7 @@ fn test_maps() {
 // BTreeSet selain memastikan tidak ada data duplikat, juga mengurutkan data di dalam Set nya, oleh karena itu performanya lebih lambat dari HashSet karena perlu mengurutkan data setiap kita menambah data ke BTreeSet
 
 use std::collections::BTreeSet;
+
 #[test]
 fn test_set() {
     // Membuat HashSet kosong untuk menampung data unik
@@ -2606,6 +2612,7 @@ fn test_recover_error() {
 //     println!("r : {}", r)
 // }
 
+
 // Lifetime di function
 // Salah satu hal yang membingungkan lain nya adalah ketika kita menggunakan reference sebagai parameter, sekalogus sebagai return value
 // misal kita akan membuat function dengan dua parameter reference, lalu kita bandingkan dan mengemablikan salah satu parameter reference sebagai return value
@@ -2637,6 +2644,30 @@ fn longest<'a>(val1: &'a str, val2: &'a str) -> &'a str /* disini aman rust tida
 fn test_lifetime_annotation_syntx() {
     let hasil: &str = longest("Mantap", "Apa");
     println!("hasil: {}", hasil)
+}
+
+fn coba<'a, T: Copy>(data: &'a mut Vec<T>, ike: u8) -> Option<&'a mut T> {
+    let mut count: u8 = 0;
+    for d in data {
+        count += 1;
+        if count == ike {
+            return Some(d)
+        }
+    };
+    None
+}
+
+
+#[test]
+fn testlife() {
+    let mut data: Vec<f32> = vec![22.4, 3.142323232, 223.23, 323.22, 311.212];
+   
+    {
+         let phi: &mut f32 = coba(&mut data, 2).unwrap();
+         *phi = 100.200;
+    }
+
+   println!("ini yang dipilih: {}", coba(&mut data, 2).unwrap())
 }
 
 // INFOO!
